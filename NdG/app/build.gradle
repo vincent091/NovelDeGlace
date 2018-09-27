@@ -1,35 +1,50 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.lnproduction.noveldeglace"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName "0.0.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        main.res.srcDirs += 'src/main/splashscreen'
+        main.res.srcDirs += 'src/main/novels_list'
+        main.res.srcDirs += 'src/main/novels_details'
+        main.res.srcDirs += 'src/main/splashscreen_background'
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.supportLibraryVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintLayout"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.supportLibraryVersion"
+    implementation "androidx.cardview:cardview:$rootProject.ext.supportLibraryVersion"
+    implementation "androidx.vectordrawable:vectordrawable:$rootProject.ext.supportLibraryVersion"
+    implementation "com.google.android.material:material:$rootProject.ext.supportLibraryVersion"
+    implementation "androidx.palette:palette:$rootProject.ext.supportLibraryVersion"
     implementation 'com.koushikdutta.ion:ion:2.2.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.11'
-    implementation 'org.liquigraph:liquigraph-dagger2:3.0.2'
-    implementation 'org.jsoup:jsoup:1.11.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit"
+}
+repositories {
+    mavenCentral()
 }
