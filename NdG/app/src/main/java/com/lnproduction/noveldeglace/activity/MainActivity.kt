@@ -6,16 +6,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.lnproduction.noveldeglace.R
-import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.utils.Constants
 import com.lnproduction.noveldeglace.utils.log
-import com.lnproduction.noveldeglace.viewModel.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : BaseActivity(), IMainActivity {
+class MainActivity : BaseActivity() {
 
-    private val presenter = MainActivityPresenter(this)
 
     companion object {
         private inline operator fun Int.invoke(message: () -> String) = log(this, TAG, LOG_LEVEL, message)
@@ -31,7 +27,12 @@ class MainActivity : BaseActivity(), IMainActivity {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar as Toolbar?)
-        presenter.onCreate()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().run {
+                replace(R.id.sample_content_fragment, PostFragment())
+                commit()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -52,22 +53,10 @@ class MainActivity : BaseActivity(), IMainActivity {
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.onPause()
-    }
-
-    override fun getErrorMessage(errorMessage: String) {
-        Log.e("MainActivity", errorMessage)
-    }
-
-    override fun getNovels(titleNovel: ArrayList<Novel>?) {
-        /*recycler_view_notice_list.apply {
-
-        }*/
     }
 
 }
