@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <item android:title="Informations personnelles">
+        <menu>
+            <item
+                android:id="@+id/nav_account"
+                android:icon="@drawable/account"
+                android:title="Mon compte"/>
+            <item
+                android:id="@+id/nav_connect"
+                android:icon="@drawable/key"
+                android:title="Deconnexion"/>
+        </menu>
+    </item>
+    <item android:title="Informations générales">
+        <menu>
+            <item
+                android:id="@+id/nav_website"
+                android:icon="@drawable/http"
+                android:title="Site internet"/>
+            <item
+                android:id="@+id/nav_twitter"
+                android:icon="@drawable/twitter"
+                android:title="Twitter"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/about"
+                android:title="A propos"/>
+
+        </menu>
+    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_donation"
+            android:icon="@drawable/money"
+            android:title="Donation"/>
+    </group>
+
+</menu>
