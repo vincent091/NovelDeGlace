@@ -21,6 +21,7 @@ class PostFragment : Fragment() , IPostFragment {
     private lateinit var currentLayoutManagerType: LayoutManagerType
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var postAdapter : PostAdapter
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
 
@@ -113,6 +114,11 @@ class PostFragment : Fragment() , IPostFragment {
 
     override fun getPosts(postsList: ArrayList<Post>?) {
         setRecyclerViewLayoutManager(currentLayoutManagerType)
-        recyclerView.adapter = PostAdapter(postsList)
+        postAdapter = PostAdapter(postsList)
+        recyclerView.adapter = postAdapter
+    }
+
+    fun filterTextWithQuery(query: String) {
+        postAdapter.getFilter().filter(query)
     }
 }

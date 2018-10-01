@@ -1,5 +1,7 @@
 package com.lnproduction.noveldeglace.activity
 
+import android.app.SearchManager
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.SearchView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
@@ -17,8 +20,6 @@ import com.lnproduction.noveldeglace.utils.Constants
 import com.lnproduction.noveldeglace.utils.log
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_main.*
-
-
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -34,13 +35,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         private const val LOG_LEVEL = Constants.LOG_FORCE * Constants.LOG_LEVEL + (1 - Constants.LOG_FORCE) * Log.DEBUG
     }
 
+    private lateinit var searchView: SearchView
+    private lateinit var postFragment: PostFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_main)
         setSupportActionBar(toolbar)
         if (savedInstanceState == null) {
+            postFragment = PostFragment()
             supportFragmentManager.beginTransaction().run {
-                replace(R.id.sample_content_fragment, PostFragment())
+                replace(R.id.sample_content_fragment, postFragment)
                 commit()
             }
         }
@@ -73,21 +78,47 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main,menu)
+
+        // Associate searchable configuration with the SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu?.findItem(R.id.action_search)
+                ?.actionView as SearchView
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(componentName))
+        searchView.setMaxWidth(Integer.MAX_VALUE)
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // filter recycler view when query submitted
+                postFragment.filterTextWithQuery(query)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                postFragment.filterTextWithQuery(query)
+                return false
+            }
+        })
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         val id = item?.itemId
-        if(R.id.action_mode == id)
-        {
-            return true
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_search) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {

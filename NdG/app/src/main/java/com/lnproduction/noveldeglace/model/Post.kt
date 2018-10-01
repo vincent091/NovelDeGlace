@@ -16,4 +16,7 @@ class Post {
     @SerializedName(value = "excerpt")
     lateinit var postText : PostText
 
+    @SerializedName("fimg_url")
+    lateinit var postImg : String
+
 }

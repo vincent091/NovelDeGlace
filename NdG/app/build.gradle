@@ -37,7 +37,7 @@ dependencies {
     implementation "androidx.vectordrawable:vectordrawable:$rootProject.ext.supportLibraryVersion"
     implementation "com.google.android.material:material:$rootProject.ext.supportLibraryVersion"
     implementation "androidx.palette:palette:$rootProject.ext.supportLibraryVersion"
-    implementation 'com.koushikdutta.ion:ion:2.2.1'
+    implementation 'com.facebook.fresco:fresco:1.10.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
