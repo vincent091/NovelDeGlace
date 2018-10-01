@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">NovelDeGlace</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet mollis risus. Pellentesque consectetur massa in rutrum imperdiet. Donec efficitur euismod est vitae ornare. In libero augue, laoreet in semper iaculis, eleifend et lacus. Nullam quis est hendrerit, auctor augue quis, dapibus libero. Suspendisse fermentum faucibus sem, ac ullamcorper ante porta semper. Proin viverra, massa at aliquam faucibus, est urna vestibulum lacus, ut pulvinar felis tortor vel nunc. Quisque pulvinar urna vitae augue finibus, et tristique erat semper. Ut sit amet fringilla urna, vel mattis leo. Aenean sed mollis tortor.</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 </resources>
