@@ -10,7 +10,7 @@ fun parseDateToddMMyyyy(time: String): String? {
     val inputFormat = SimpleDateFormat(inputPattern, Locale.FRANCE)
     inputFormat.timeZone = TimeZone.getTimeZone("UTC")
     val outputFormat = SimpleDateFormat(outputPattern, Locale.FRANCE)
-
+    outputFormat.timeZone = TimeZone.getDefault()
     var date: Date? = null
     var str: String? = null
 

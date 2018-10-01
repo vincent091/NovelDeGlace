@@ -37,31 +37,75 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private lateinit var searchView: SearchView
     private lateinit var postFragment: PostFragment
+    private lateinit var emptyFragment: EmptyFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_main)
         setSupportActionBar(toolbar)
-        if (savedInstanceState == null) {
-            postFragment = PostFragment()
-            supportFragmentManager.beginTransaction().run {
-                replace(R.id.sample_content_fragment, postFragment)
-                commit()
-            }
-        }
+
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+        setupNavigationDrawer()
+        setupBottomBar()
+    }
+
+    private fun setupBottomBar() {
+        bottom_navigation.inflateMenu(R.menu.bottomview_menu)
+        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+            val id = item.itemId
+            when (id) {
+                R.id.action_news -> {
+                    postFragment = PostFragment()
+                    supportFragmentManager.beginTransaction().run {
+                        replace(R.id.sample_content_fragment, postFragment)
+                        commit()
+                    }
+                }
+                R.id.action_novel -> {
+                    emptyFragment = EmptyFragment()
+                    supportFragmentManager.beginTransaction().run {
+                        replace(R.id.sample_content_fragment, emptyFragment)
+                        commit()
+                    }
+                }
+                R.id.action_favorite -> {
+                    emptyFragment = EmptyFragment()
+                    supportFragmentManager.beginTransaction().run {
+                        replace(R.id.sample_content_fragment, emptyFragment)
+                        commit()
+                    }
+                }
+                R.id.action_vote -> {
+                    emptyFragment = EmptyFragment()
+                    supportFragmentManager.beginTransaction().run {
+                        replace(R.id.sample_content_fragment, emptyFragment)
+                        commit()
+                    }
+                }
+            }
+            true
+        }
+
+        bottom_navigation.getMenu().getItem(0).setChecked(true);
+        postFragment = PostFragment()
+        supportFragmentManager.beginTransaction().run {
+            replace(R.id.sample_content_fragment, postFragment)
+            commit()
+        }
+    }
+
+    private fun setupNavigationDrawer() {
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val hView = navigationView.getHeaderView(0)
 
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_demo)
 
         val rounded = RoundedBitmapDrawableFactory.create(resources, bitmap)
-
         rounded.setCornerRadius(bitmap.width.toFloat())
 
         val drawerProfile = hView.findViewById(R.id.imageView) as ImageView
@@ -77,29 +121,33 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main,menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
 
         // Associate searchable configuration with the SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = menu?.findItem(R.id.action_search)
                 ?.actionView as SearchView
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(componentName))
-        searchView.setMaxWidth(Integer.MAX_VALUE)
 
-        // listening to search query text change
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                // filter recycler view when query submitted
-                postFragment.filterTextWithQuery(query)
-                return false
-            }
+        searchView.apply {
+            setSearchableInfo(searchManager
+                    .getSearchableInfo(componentName))
+            setMaxWidth(Integer.MAX_VALUE)
 
-            override fun onQueryTextChange(query: String): Boolean {
-                postFragment.filterTextWithQuery(query)
-                return false
-            }
-        })
+            // listening to search query text change
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    // filter recycler view when query submitted
+                    postFragment.filterTextWithQuery(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String): Boolean {
+                    postFragment.filterTextWithQuery(query)
+                    return false
+                }
+            })
+        }
+
         return true
     }
 

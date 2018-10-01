@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_news"
+        android:title="Accueil"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/home">
+    </item>
+    <item
+        android:id="@+id/action_novel"
+        android:title="Romans"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/book">
+    </item>
+    <item
+        android:id="@+id/action_favorite"
+        android:title="Bibliothèque"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/favorite">
+    </item>
+    <item
+        android:id="@+id/action_vote"
+        android:title="Vote"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/vote">
+    </item>
+</menu>
