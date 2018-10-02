@@ -52,6 +52,8 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
 
         currentLayoutManagerType = NovelsFragment.LayoutManagerType.GRID_LAYOUT_MANAGER
 
+        setRecyclerViewLayoutManager(currentLayoutManagerType)
+
         if (savedInstanceState != null) {
             // Restore saved layout manager type.
             currentLayoutManagerType = savedInstanceState
@@ -125,7 +127,7 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
     }
 
     override fun getNovels(novelLists: ArrayList<Novel>?) {
-        setRecyclerViewLayoutManager(currentLayoutManagerType)
+
         novelAdapter = NovelAdapter(novelLists)
         recyclerView.adapter = novelAdapter
     }
