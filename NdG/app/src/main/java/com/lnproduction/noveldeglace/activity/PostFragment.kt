@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lnproduction.noveldeglace.R
@@ -15,11 +15,11 @@ import com.lnproduction.noveldeglace.utils.RecyclerItemDecoration
 import com.lnproduction.noveldeglace.viewModel.PostFragmentPresenter
 
 
-
-class PostFragment : Fragment() , IPostFragment {
+class PostFragment : BaseFragment() , IPostFragment {
 
     private lateinit var currentLayoutManagerType: LayoutManagerType
     private lateinit var recyclerView: RecyclerView
+    private lateinit var rltvFilter : RelativeLayout
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var postAdapter : PostAdapter
 
@@ -33,8 +33,12 @@ class PostFragment : Fragment() , IPostFragment {
         val rootView = inflater.inflate(R.layout.content_main,
                 container, false).apply { tag = TAG}
 
-        recyclerView = rootView.findViewById(R.id.recycler_view_notice_list)
 
+
+        recyclerView = rootView.findViewById(R.id.recycler_view_notice_list)
+        rltvFilter = rootView.findViewById(R.id.rltvFilter)
+
+        rltvFilter.visibility = View.GONE
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.

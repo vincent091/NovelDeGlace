@@ -27,7 +27,7 @@ public class AutoFitGridLayoutManager extends GridLayoutManager {
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         if (columnWidthChanged && columnWidth > 0) {
             int totalSpace;
-            if (getOrientation() == VERTICAL) {
+            if (getOrientation() == RecyclerView.VERTICAL) {
                 totalSpace = getWidth() - getPaddingRight() - getPaddingLeft();
             } else {
                 totalSpace = getHeight() - getPaddingTop() - getPaddingBottom();

@@ -12,4 +12,17 @@ class Novel {
 
     @SerializedName("id")
     var novelId : Int = -1
+
+    @SerializedName("roman_url_img")
+    lateinit var imgNovel : String
+
+    @SerializedName("categorie_roman")
+    lateinit var idCategories : ArrayList<Int>
+
+    @SerializedName("genre_roman")
+    lateinit var idGenre : ArrayList<Int>
+
+    @SerializedName("featured_media")
+    var feature_media : Int = -1
+
 }

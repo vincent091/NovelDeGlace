@@ -1,6 +1,6 @@
 package com.lnproduction.noveldeglace.viewModel
 
-interface IMainActivityPresenter {
+interface INovelFragmentPresenter {
 
     fun onCreate()
 
@@ -8,4 +8,5 @@ interface IMainActivityPresenter {
 
     fun onPause()
 
+    fun getNovelList(categorieId: Int)
 }

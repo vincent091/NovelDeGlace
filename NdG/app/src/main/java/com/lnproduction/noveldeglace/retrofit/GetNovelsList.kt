@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface GetNovelsList {
 
-    @GET("romans-api?per-page=100")
+    @GET("romans-api?per_page=100")
     fun getNovels(): Call<ArrayList<Novel>>
 }

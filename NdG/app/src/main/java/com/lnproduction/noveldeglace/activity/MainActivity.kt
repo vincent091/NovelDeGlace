@@ -37,7 +37,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private lateinit var searchView: SearchView
     private lateinit var postFragment: PostFragment
-    private lateinit var emptyFragment: EmptyFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,35 +57,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         bottom_navigation.inflateMenu(R.menu.bottomview_menu)
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             val id = item.itemId
+            var baseFragment = BaseFragment()
             when (id) {
                 R.id.action_news -> {
-                    postFragment = PostFragment()
-                    supportFragmentManager.beginTransaction().run {
-                        replace(R.id.sample_content_fragment, postFragment)
-                        commit()
-                    }
+                    baseFragment = PostFragment()
                 }
                 R.id.action_novel -> {
-                    emptyFragment = EmptyFragment()
-                    supportFragmentManager.beginTransaction().run {
-                        replace(R.id.sample_content_fragment, emptyFragment)
-                        commit()
-                    }
+                    baseFragment = NovelsFragment()
                 }
                 R.id.action_favorite -> {
-                    emptyFragment = EmptyFragment()
-                    supportFragmentManager.beginTransaction().run {
-                        replace(R.id.sample_content_fragment, emptyFragment)
-                        commit()
-                    }
+                    baseFragment = EmptyFragment()
                 }
                 R.id.action_vote -> {
-                    emptyFragment = EmptyFragment()
-                    supportFragmentManager.beginTransaction().run {
-                        replace(R.id.sample_content_fragment, emptyFragment)
-                        commit()
-                    }
+                    baseFragment = EmptyFragment()
                 }
+            }
+            supportFragmentManager.beginTransaction().run {
+                replace(R.id.sample_content_fragment, baseFragment)
+                commit()
             }
             true
         }

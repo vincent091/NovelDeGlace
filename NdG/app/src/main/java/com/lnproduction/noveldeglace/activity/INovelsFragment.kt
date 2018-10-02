@@ -2,9 +2,9 @@ package com.lnproduction.noveldeglace.activity
 
 import com.lnproduction.noveldeglace.model.Novel
 
-interface IMainActivity {
+interface INovelsFragment {
 
     fun getErrorMessage(errorMessage : String)
 
-    fun getNovels(titleNovel : ArrayList<Novel>?)
+    fun getNovels(novelLists : ArrayList<Novel>?)
 }
