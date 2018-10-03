@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.RadioButton
-import android.widget.Spinner
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,6 +29,8 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
         private val TAG = "NovelsFragment"
         private val KEY_LAYOUT_MANAGER = "layoutManager"
         private val SPAN_COUNT = 2
+        private var animShow: Animation? = null
+        private var animHide: Animation? = null
     }
 
     val presenter : INovelFragmentPresenter = NovelsFragmentPresenter(this)
@@ -34,7 +39,8 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var fab : FloatingActionButton
-    private lateinit var android_material_design_spinner : Spinner
+    private lateinit var optionLayout : RelativeLayout
+    private lateinit var optionArrow : ImageView
     private lateinit var novelAdapter : NovelAdapter
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
@@ -44,6 +50,9 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
 
         recyclerView = rootView.findViewById(R.id.recycler_view_notice_list)
         fab = rootView.findViewById(R.id.fab)
+        optionLayout = rootView.findViewById(R.id.option_layout)
+        optionArrow = rootView.findViewById(R.id.option_arrow)
+        val mMultiLineRadioGroup = rootView.findViewById(R.id.main_activity_multi_line_radio_group) as MultiLineRadioGroup
 
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -60,7 +69,6 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
                     .getSerializable(NovelsFragment.KEY_LAYOUT_MANAGER) as NovelsFragment.LayoutManagerType
         }
 
-        val mMultiLineRadioGroup = rootView.findViewById(R.id.main_activity_multi_line_radio_group) as MultiLineRadioGroup
 
         mMultiLineRadioGroup.setOnCheckedChangeListener(object : MultiLineRadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: ViewGroup, button: RadioButton) {
@@ -74,6 +82,19 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
                 }
             }
         })
+
+        animShow = AnimationUtils.loadAnimation( activity, R.anim.view_show);
+        animHide = AnimationUtils.loadAnimation( activity, R.anim.view_hide);
+
+        optionLayout.setOnClickListener{
+            if(mMultiLineRadioGroup.visibility == View.GONE) {
+                mMultiLineRadioGroup.setVisibility(View.VISIBLE);
+                optionArrow.setImageResource(R.drawable.chevron_up)
+            }else{
+                mMultiLineRadioGroup.setVisibility(View.GONE);
+                optionArrow.setImageResource(R.drawable.chevron_down)
+            }
+        }
 
         fab.hide()
 

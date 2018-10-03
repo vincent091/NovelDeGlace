@@ -50,7 +50,7 @@ class NovelAdapter(private val dataSet: ArrayList<Novel>?) :
         val novel : Novel = contactNovelFiltered.get(position)
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.postImg.setImageURI(novel.imgNovel.split("?")[0])
+        viewHolder.postImg.setImageURI(novel.imgNovel)
 
     }
 }
