@@ -18,7 +18,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/picture_novel"
             android:layout_width="140dp"
             android:layout_height="90dp"

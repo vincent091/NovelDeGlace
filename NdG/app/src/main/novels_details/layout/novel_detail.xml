@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.33">
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/chapter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.67"
+        android:alpha="0.75">
+
+    </RelativeLayout>
+
+</LinearLayout>

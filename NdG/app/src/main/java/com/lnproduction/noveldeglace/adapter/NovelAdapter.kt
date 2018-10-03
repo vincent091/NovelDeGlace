@@ -1,16 +1,21 @@
 package com.lnproduction.noveldeglace.adapter
 
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.drawee.view.SimpleDraweeView
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.utils.Log
+import com.lnproduction.noveldeglace.utils.PaletteTransformation
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import java.util.*
 
-class NovelAdapter(private val dataSet: ArrayList<Novel>?) :
+
+class NovelAdapter(private val dataSet: ArrayList<Novel>?,  val listener: ContentListener) :
         RecyclerView.Adapter<NovelAdapter.ViewHolder>() {
 
     companion object {
@@ -23,7 +28,7 @@ class NovelAdapter(private val dataSet: ArrayList<Novel>?) :
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val postImg : SimpleDraweeView
+        val postImg : ImageView
 
         init {
             // Define click listener for the ViewHolder's View.
@@ -50,7 +55,25 @@ class NovelAdapter(private val dataSet: ArrayList<Novel>?) :
         val novel : Novel = contactNovelFiltered.get(position)
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.postImg.setImageURI(novel.imgNovel)
+        Picasso.with(viewHolder.postImg.context)
+                .load(novel.imgNovel)
+                .fit().centerCrop()
+                .transform(PaletteTransformation.instance())
+                .into(viewHolder.postImg, object : Callback.EmptyCallback() {
+                    override fun onSuccess() {
+                        val bitmap = (viewHolder.postImg.getDrawable() as BitmapDrawable).bitmap // Ew!
+                        val palette = PaletteTransformation.getPalette(bitmap)
+                        novel.palette = palette
+                    }
+                })
 
+        viewHolder.postImg.setOnClickListener {
+            listener.onItemClicked(novel)
+        }
+
+    }
+
+    public interface ContentListener {
+        fun onItemClicked(item: Novel)
     }
 }

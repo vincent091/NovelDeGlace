@@ -1,5 +1,6 @@
 package com.lnproduction.noveldeglace.model
 
+import androidx.palette.graphics.Palette
 import com.google.gson.annotations.SerializedName
 
 class Novel {
@@ -24,5 +25,7 @@ class Novel {
 
     @SerializedName("featured_media")
     var feature_media : Int = -1
+
+    lateinit var palette : Palette
 
 }

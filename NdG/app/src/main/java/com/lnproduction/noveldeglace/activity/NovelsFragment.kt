@@ -24,7 +24,8 @@ import com.lnproduction.noveldeglace.viewModel.NovelsFragmentPresenter
 
 
 
-class NovelsFragment : BaseFragment(), INovelsFragment {
+class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentListener {
+
     companion object {
         private val TAG = "NovelsFragment"
         private val KEY_LAYOUT_MANAGER = "layoutManager"
@@ -149,7 +150,12 @@ class NovelsFragment : BaseFragment(), INovelsFragment {
 
     override fun getNovels(novelLists: ArrayList<Novel>?) {
 
-        novelAdapter = NovelAdapter(novelLists)
+        novelAdapter = NovelAdapter(novelLists,this)
         recyclerView.adapter = novelAdapter
+    }
+
+    override fun onItemClicked(item: Novel) {
+        val novelFragment = NovelFragment.newInstance(item)
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.sample_content_fragment,novelFragment).addToBackStack("novel").commit()
     }
 }
