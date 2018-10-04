@@ -33,7 +33,7 @@ class PostFragment : BaseFragment() , IPostFragment {
         val rootView = inflater.inflate(R.layout.content_main,
                 container, false).apply { tag = TAG}
 
-
+        activity?.setTitle("Nouveauté")
 
         recyclerView = rootView.findViewById(R.id.recycler_view_notice_list)
         rltvFilter = rootView.findViewById(R.id.rltvFilter)

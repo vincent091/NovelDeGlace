@@ -2,6 +2,7 @@ package com.lnproduction.noveldeglace.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -46,9 +47,21 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        // You can hide the state of the menu item here if you call getActivity().supportInvalidateOptionsMenu(); somewhere in your code
+        val menuItem = menu.findItem(R.id.action_search)
+        menuItem.setVisible(false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.content_main, container, false)
-
+        activity?.setTitle("Romans")
         recyclerView = rootView.findViewById(R.id.recycler_view_notice_list)
         fab = rootView.findViewById(R.id.fab)
         optionLayout = rootView.findViewById(R.id.option_layout)
@@ -151,6 +164,8 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
     override fun getNovels(novelLists: ArrayList<Novel>?) {
 
         novelAdapter = NovelAdapter(novelLists,this)
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(novelLists!!.size);
         recyclerView.adapter = novelAdapter
     }
 
