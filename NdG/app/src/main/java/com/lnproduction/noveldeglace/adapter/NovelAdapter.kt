@@ -55,8 +55,10 @@ class NovelAdapter(private val dataSet: ArrayList<Novel>?,  val listener: Conten
         val novel : Novel = contactNovelFiltered.get(position)
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        Picasso.with(viewHolder.postImg.context)
-                .load(novel.imgNovel)
+        val picasso = Picasso.Builder(viewHolder.postImg.context)
+                .listener { _, _, e -> e.printStackTrace() }
+                .build()
+        picasso.load(novel.imgNovel)
                 .fit().centerCrop()
                 .transform(PaletteTransformation.instance())
                 .into(viewHolder.postImg, object : Callback.EmptyCallback() {

@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface GetPostsList {
 
-    @GET("posts?per-page=100")
+    @GET("wp/v2/posts?per_page=100")
     fun getPosts(): Call<ArrayList<Post>>
 }

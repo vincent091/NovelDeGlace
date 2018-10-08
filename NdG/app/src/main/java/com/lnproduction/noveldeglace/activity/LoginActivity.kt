@@ -6,6 +6,7 @@ import android.widget.EditText
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import butterknife.Unbinder
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.model.LoginCredentials
 import com.lnproduction.noveldeglace.model.LoginRepository
@@ -32,11 +33,13 @@ class LoginActivity : BaseActivity(), LoginView {
     //TODO @Inject
     lateinit var loginPresenter: LoginPresenter
 
+    private lateinit var unbinder: Unbinder
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        ButterKnife.bind(this)
+        unbinder = ButterKnife.bind(this)
 
         passwordView.setOnEditorActionListener { _, id, _ ->
             if (id == 1) {
@@ -52,6 +55,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun onDestroy() {
+        unbinder.unbind()
         loginPresenter.destroyView()
         super.onDestroy()
     }
