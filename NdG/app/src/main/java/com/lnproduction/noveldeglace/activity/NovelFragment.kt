@@ -16,7 +16,6 @@ import com.lnproduction.noveldeglace.adapter.ExpandableLayoutAdapter
 import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.model.NovelDetail
 import com.lnproduction.noveldeglace.utils.Log
-import com.lnproduction.noveldeglace.utils.SchedulersFactory
 import com.lnproduction.noveldeglace.viewModel.NovelPresenter
 import com.squareup.picasso.Picasso
 
@@ -82,7 +81,7 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
 
         unbinder = ButterKnife.bind(this,view)
 
-        novelPresenter = NovelPresenter(SchedulersFactory())
+        novelPresenter = NovelPresenter()
         novelPresenter.createView(this)
         novelPresenter.getNovelDetails(arguments!!.getInt(TITLE_ID))
 

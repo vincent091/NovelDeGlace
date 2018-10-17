@@ -6,12 +6,11 @@ import com.lnproduction.noveldeglace.activity.WebViewActivity
 import com.lnproduction.noveldeglace.model.NovelDetail
 import com.lnproduction.noveldeglace.retrofit.GetNovelDetails
 import com.lnproduction.noveldeglace.retrofit.RetrofitInstance
-import com.lnproduction.noveldeglace.utils.SchedulersFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NovelPresenter(private val schedulersFactory: SchedulersFactory) : BasePresenter<NovelFragment>() {
+class NovelPresenter() : BasePresenter<NovelFragment>() {
 
     fun getNovelDetails(novelId : Int){
         val service : GetNovelDetails = RetrofitInstance.getRetrofitInstance()!!.create(GetNovelDetails::class.java)

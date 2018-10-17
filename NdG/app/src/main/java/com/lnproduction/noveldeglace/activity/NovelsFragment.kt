@@ -19,7 +19,6 @@ import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.utils.AutoFitGridLayoutManager
 import com.lnproduction.noveldeglace.utils.MultiLineRadioGroup
 import com.lnproduction.noveldeglace.utils.RecyclerItemDecoration
-import com.lnproduction.noveldeglace.viewModel.INovelFragmentPresenter
 import com.lnproduction.noveldeglace.viewModel.NovelsFragmentPresenter
 
 
@@ -30,12 +29,11 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
     companion object {
         private val TAG = "NovelsFragment"
         private val KEY_LAYOUT_MANAGER = "layoutManager"
-        private val SPAN_COUNT = 2
         private var animShow: Animation? = null
         private var animHide: Animation? = null
     }
 
-    val presenter : INovelFragmentPresenter = NovelsFragmentPresenter(this)
+    val presenter = NovelsFragmentPresenter()
 
     private lateinit var currentLayoutManagerType: NovelsFragment.LayoutManagerType
     private lateinit var recyclerView: RecyclerView
@@ -54,7 +52,6 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        // You can hide the state of the menu item here if you call getActivity().supportInvalidateOptionsMenu(); somewhere in your code
         val menuItem = menu.findItem(R.id.action_search)
         menuItem.setVisible(false)
     }
@@ -68,9 +65,6 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
         optionArrow = rootView.findViewById(R.id.option_arrow)
         val mMultiLineRadioGroup = rootView.findViewById(R.id.main_activity_multi_line_radio_group) as MultiLineRadioGroup
 
-        // LinearLayoutManager is used here, this will layout the elements in a similar fashion
-        // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
-        // elements are laid out.
         layoutManager = LinearLayoutManager(activity)
 
         currentLayoutManagerType = NovelsFragment.LayoutManagerType.GRID_LAYOUT_MANAGER
@@ -87,13 +81,7 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
         mMultiLineRadioGroup.setOnCheckedChangeListener(object : MultiLineRadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: ViewGroup, button: RadioButton) {
                 val rdbGroup = group as MultiLineRadioGroup
-                when {
-                    rdbGroup.checkedRadioButtonIndex == 0 -> presenter.getNovelList(-1)
-                    rdbGroup.checkedRadioButtonIndex == 1 -> presenter.getNovelList(73)
-                    rdbGroup.checkedRadioButtonIndex == 2 -> presenter.getNovelList(74)
-                    rdbGroup.checkedRadioButtonIndex == 3 -> presenter.getNovelList(265)
-                    rdbGroup.checkedRadioButtonIndex == 4 -> presenter.getNovelList(-2)
-                }
+                presenter.filterByRadioButton(rdbGroup.checkedRadioButtonIndex)
             }
         })
 
@@ -112,8 +100,14 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
 
         fab.hide()
 
-        presenter.onCreate()
+        presenter.createView(this)
+        presenter.getNovelList(-1)
         return rootView
+    }
+
+    override fun onDestroyView() {
+        presenter.destroyView()
+        super.onDestroyView()
     }
 
     /**

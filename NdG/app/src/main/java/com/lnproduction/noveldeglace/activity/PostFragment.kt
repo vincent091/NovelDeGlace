@@ -25,7 +25,7 @@ class PostFragment : BaseFragment() , IPostFragment {
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
 
-    var presenterFragment = PostFragmentPresenter(this)
+    var presenterFragment = PostFragmentPresenter()
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -39,30 +39,25 @@ class PostFragment : BaseFragment() , IPostFragment {
         rltvFilter = rootView.findViewById(R.id.rltvFilter)
 
         rltvFilter.visibility = View.GONE
-        // LinearLayoutManager is used here, this will layout the elements in a similar fashion
-        // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
-        // elements are laid out.
         layoutManager = LinearLayoutManager(activity)
 
         currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
 
         if (savedInstanceState != null) {
-            // Restore saved layout manager type.
             currentLayoutManagerType = savedInstanceState
                     .getSerializable(KEY_LAYOUT_MANAGER) as LayoutManagerType
         }
 
-        presenterFragment.onCreate()
+        presenterFragment.createView(this)
+        presenterFragment.getPostsList()
 
-        /*rootView.findViewById<RadioButton>(R.id.linear_layout_rb).setOnClickListener{
-            setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER)
-        }
-
-        rootView.findViewById<RadioButton>(R.id.grid_layout_rb).setOnClickListener{
-            setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER)
-        }*/
 
         return rootView
+    }
+
+    override fun onDestroy() {
+        presenterFragment.destroyView()
+        super.onDestroy()
     }
 
     /**
@@ -110,7 +105,6 @@ class PostFragment : BaseFragment() , IPostFragment {
     companion object {
         private val TAG = "PostFragment"
         private val KEY_LAYOUT_MANAGER = "layoutManager"
-        private val SPAN_COUNT = 2
     }
 
     override fun getErrorMessage(errorMessage: String) {
