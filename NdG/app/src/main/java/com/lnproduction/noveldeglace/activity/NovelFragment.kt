@@ -20,7 +20,7 @@ import com.lnproduction.noveldeglace.utils.SchedulersFactory
 import com.lnproduction.noveldeglace.viewModel.NovelPresenter
 import com.squareup.picasso.Picasso
 
-class NovelFragment : BaseFragment() , NovelDetailsView {
+class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapter.ContentListener {
 
     companion object {
         private val BACKGROUND_COLOR = "palette_background"
@@ -137,8 +137,12 @@ class NovelFragment : BaseFragment() , NovelDetailsView {
         chapterNovel.text = getString(R.string.novel_nb_chap, novelDetail.nbChapters)
         chapterNovel.setTextColor(arguments!!.getInt(TEXT_COLOR))
 
-        adapter = ExpandableLayoutAdapter(novelDetail.tomeList, arguments!!.getInt(BACKGROUND_COLOR),arguments!!.getInt(TEXT_COLOR))
+        adapter = ExpandableLayoutAdapter(novelDetail.tomeList, arguments!!.getInt(BACKGROUND_COLOR),arguments!!.getInt(TEXT_COLOR),this)
         expandableNovelChapter.setAdapter(adapter)
+    }
+
+    override fun onChapters(url: String) {
+        novelPresenter.openWebView(url)
     }
 
 }

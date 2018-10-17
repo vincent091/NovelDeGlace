@@ -16,7 +16,7 @@ import java.util.*
 
 
 
-class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val backgroundColor: Int, private val textColor: Int) : BaseExpandableListAdapter() {
+class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val backgroundColor: Int, private val textColor: Int, private val listener : ContentListener) : BaseExpandableListAdapter() {
 
     override fun getGroup(groupPosition: Int): Any {
         return dataSet.get(groupPosition)
@@ -39,8 +39,8 @@ class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val 
             view = layoutInflater.inflate(R.layout.item_header, parent,false)
         }
         val expandedListTextView = view?.findViewById(R.id.item_header_name) as TextView
-        val groupLayout : LinearLayout = view?.findViewById(R.id.group_layout)
-        val arrowIMg : ImageView = view?.findViewById(R.id.item_arrow)
+        val groupLayout : LinearLayout = view.findViewById(R.id.group_layout)
+        val arrowIMg : ImageView = view.findViewById(R.id.item_arrow)
         groupLayout.setBackgroundColor(backgroundColor)
         expandedListTextView.setTextColor(textColor)
         expandedListTextView.text = "Tome "+ tome.tomeId
@@ -52,7 +52,7 @@ class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val 
         {
             arrowIMg.rotation = 0F
         }
-        return view!!
+        return view
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
@@ -76,11 +76,12 @@ class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val 
             view = layoutInflater.inflate(R.layout.item_detail, parent,false)
         }
         val expandedListTextView = view?.findViewById(R.id.item_name) as TextView
-        val childLayout : LinearLayout = view?.findViewById(R.id.child_layout)
+        val childLayout : LinearLayout = view.findViewById(R.id.child_layout)
         childLayout.setBackgroundColor(backgroundColor)
         expandedListTextView.text = chapter.chapterName
         expandedListTextView.setTextColor(textColor)
-        return view!!
+        view.setOnClickListener { listener.onChapters(chapter.chapterUrl) }
+        return view
     }
 
     override fun getChildId(groupPosition: Int, childPosition: Int): Long {
@@ -91,5 +92,7 @@ class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val 
         return dataSet.size
     }
 
-
+    interface ContentListener {
+        fun onChapters(url: String)
+    }
 }

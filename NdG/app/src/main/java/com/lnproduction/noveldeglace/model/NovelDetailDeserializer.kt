@@ -15,14 +15,13 @@ class NovelDetailDeserializer : JsonDeserializer<NovelDetail> {
     private val KEY_TOME_NAME = "name"
     private val KEY_CHAPTERS = "chapitres"
     private val KEY_CHAPTER_TOME_ID = "chapitre-tome"
-    private val KEY_CHAPTER_NUMBER = "chapitre-numero"
     private val KEY_CHAPTER_NAME = "chapitre-nom"
     private val KEY_CHAPTER_URL = "chapitre-url"
 
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): NovelDetail {
         val jsonObject: JsonObject = json!!.getAsJsonObject();
-        val novelDetail: NovelDetail = NovelDetail()
+        val novelDetail = NovelDetail()
         novelDetail.author = jsonObject.get(KEY_AUTHOR).asString
         novelDetail.rythm = jsonObject.get(KEY_RYTHM).asString
         novelDetail.status = jsonObject.get(KEY_STATUS).asString

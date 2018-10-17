@@ -5,6 +5,11 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.lnproduction.noveldeglace"
         minSdkVersion 21
@@ -52,7 +57,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.3.0'
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     kapt 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
-    implementation 'com.github.grennis:ExpandableRecyclerView:0.9.3'
+    implementation 'org.jsoup:jsoup:1.11.3'
 }
 repositories {
     mavenCentral()

@@ -75,7 +75,7 @@ class NovelAdapter(private val dataSet: ArrayList<Novel>?,  val listener: Conten
 
     }
 
-    public interface ContentListener {
+    interface ContentListener {
         fun onItemClicked(item: Novel)
     }
 }

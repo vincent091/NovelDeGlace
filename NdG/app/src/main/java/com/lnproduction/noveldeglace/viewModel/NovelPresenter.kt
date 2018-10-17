@@ -1,6 +1,8 @@
 package com.lnproduction.noveldeglace.viewModel
 
+import android.content.Intent
 import com.lnproduction.noveldeglace.activity.NovelFragment
+import com.lnproduction.noveldeglace.activity.WebViewActivity
 import com.lnproduction.noveldeglace.model.NovelDetail
 import com.lnproduction.noveldeglace.retrofit.GetNovelDetails
 import com.lnproduction.noveldeglace.retrofit.RetrofitInstance
@@ -25,5 +27,12 @@ class NovelPresenter(private val schedulersFactory: SchedulersFactory) : BasePre
             }
 
         })
+    }
+
+    fun openWebView(url : String)
+    {
+        val intent = Intent(view?.context, WebViewActivity::class.java)
+        intent.putExtra("chapter_url",url)
+        view?.startActivity(intent)
     }
 }
