@@ -1,5 +1,6 @@
 package com.lnproduction.noveldeglace.viewModel
 
+import com.google.gson.Gson
 import com.lnproduction.noveldeglace.activity.NovelsFragment
 import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.retrofit.GetNovelsList
@@ -48,5 +49,10 @@ class NovelsFragmentPresenter() : BasePresenter<NovelsFragment>() {
             checkedRadioButtonIndex == 4 -> getNovelList(-2)
         }
 
+    }
+
+    fun serializeResponse(item : Novel) : String{
+        val json = Gson()
+        return json.toJson(item)
     }
 }

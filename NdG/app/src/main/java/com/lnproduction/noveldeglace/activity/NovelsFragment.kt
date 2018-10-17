@@ -164,7 +164,7 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
     }
 
     override fun onItemClicked(item: Novel) {
-        val novelFragment = NovelFragment.newInstance(item)
+        val novelFragment = NovelFragment.newInstance(presenter.serializeResponse(item))
         activity!!.supportFragmentManager.beginTransaction().replace(R.id.sample_content_fragment,novelFragment).addToBackStack("novel").commit()
     }
 }

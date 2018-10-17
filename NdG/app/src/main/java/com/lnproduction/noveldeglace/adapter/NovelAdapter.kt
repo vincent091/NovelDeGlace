@@ -65,7 +65,8 @@ class NovelAdapter(private val dataSet: ArrayList<Novel>?,  val listener: Conten
                     override fun onSuccess() {
                         val bitmap = (viewHolder.postImg.getDrawable() as BitmapDrawable).bitmap // Ew!
                         val palette = PaletteTransformation.getPalette(bitmap)
-                        novel.palette = palette
+                        novel.textColor = palette.darkMutedSwatch!!.rgb
+                        novel.backgroundColor = palette.lightMutedSwatch!!.rgb
                     }
                 })
 
