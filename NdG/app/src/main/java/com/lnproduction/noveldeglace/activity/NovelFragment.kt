@@ -6,8 +6,6 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListAdapter
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.adapter.ExpandableLayoutAdapter
 import com.lnproduction.noveldeglace.model.NovelDetail
@@ -29,8 +27,6 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
         }
     }
 
-    private lateinit var unbinder: Unbinder
-
     lateinit var novelPresenter: NovelPresenter
     lateinit var adapter : ExpandableListAdapter
 
@@ -49,8 +45,6 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.novel_detail, container,false)
 
-        unbinder = ButterKnife.bind(this,view)
-
         novelPresenter = NovelPresenter()
         novelPresenter.createView(this)
         novelPresenter.getNovelDetails(arguments?.getString("NOVEL").toString())
@@ -59,7 +53,6 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
     }
 
     override fun onDestroyView() {
-        unbinder.unbind()
         novelPresenter.destroyView()
         super.onDestroyView()
     }

@@ -2,9 +2,6 @@ package com.lnproduction.noveldeglace.activity
 
 import android.os.Bundle
 import android.view.View
-import butterknife.ButterKnife
-import butterknife.OnClick
-import butterknife.Unbinder
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.model.LoginCredentials
 import com.lnproduction.noveldeglace.model.LoginRepository
@@ -19,17 +16,15 @@ import kotlinx.android.synthetic.main.activity_login.*
  * Based on Google Login Screen example
  */
 class LoginActivity : BaseActivity(), LoginView {
-    
+
     //TODO @Inject
     lateinit var loginPresenter: LoginPresenter
 
-    private lateinit var unbinder: Unbinder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        unbinder = ButterKnife.bind(this)
 
         password.setOnEditorActionListener { _, id, _ ->
             if (id == 1) {
@@ -42,15 +37,17 @@ class LoginActivity : BaseActivity(), LoginView {
 
         loginPresenter = LoginPresenter(ResourceProvider(resources), LoginValidator(), LoginUseCase(LoginRepository()), SchedulersFactory())
         loginPresenter.createView(this)
+
+        email_sign_in_button.setOnClickListener {
+            onSignInClick()
+        }
     }
 
     override fun onDestroy() {
-        unbinder.unbind()
         loginPresenter.destroyView()
         super.onDestroy()
     }
 
-    @OnClick(R.id.email_sign_in_button)
     fun onSignInClick() {
         loginPresenter.attemptLogin(
                 LoginCredentials(

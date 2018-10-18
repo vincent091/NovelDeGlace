@@ -34,7 +34,6 @@ class PostFragment : BaseFragment() , IPostFragment {
         activity?.setTitle("Nouveauté")
 
 
-        rltvFilter.visibility = View.GONE
         layoutManager = LinearLayoutManager(activity)
 
         currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
@@ -49,6 +48,11 @@ class PostFragment : BaseFragment() , IPostFragment {
 
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        rltvFilter.visibility = View.GONE
     }
 
     override fun onDestroy() {

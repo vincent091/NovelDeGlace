@@ -20,7 +20,7 @@ class NovelPresenter() : BasePresenter<NovelFragment>() {
     {
         val gson = Gson()
         novel = gson.fromJson(json,Novel::class.java)
-        val service = RetrofitInstance.getRetrofitInstance()!!.create(APIInterface::class.java)
+        val service = RetrofitInstance.getRetrofitInstance(view?.context)!!.create(APIInterface::class.java)
         val call = service.getDetails(novel.novelId)
 
         call.enqueue( object : Callback<NovelDetail> {

@@ -12,7 +12,7 @@ import retrofit2.Response
 class NovelsFragmentPresenter() : BasePresenter<NovelsFragment>() {
 
     fun getNovelList( categorieId : Int) {
-        val service = RetrofitInstance.getRetrofitInstance()!!.create(APIInterface::class.java)
+        val service = RetrofitInstance.getRetrofitInstance(view?.context)!!.create(APIInterface::class.java)
         val call = service.getNovels()
 
         call.enqueue(object : Callback<ArrayList<Novel>> {

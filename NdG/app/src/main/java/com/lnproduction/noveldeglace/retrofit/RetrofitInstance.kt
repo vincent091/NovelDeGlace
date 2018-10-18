@@ -1,14 +1,19 @@
 package com.lnproduction.noveldeglace.retrofit
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.lnproduction.noveldeglace.model.NovelDetail
 import com.lnproduction.noveldeglace.model.NovelDetailDeserializer
 import com.lnproduction.noveldeglace.utils.Constants
+import dimitrovskif.smartcache.BasicCaching
+import dimitrovskif.smartcache.SmartCallFactory
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
+
 
 
 class RetrofitInstance {
@@ -32,18 +37,16 @@ class RetrofitInstance {
         /**
          * Create an instance of Retrofit object
          */
-        fun getRetrofitInstance(): Retrofit? {
+        fun getRetrofitInstance(context: Context?): Retrofit? {
             if (retrofit == null) {
                 retrofit = retrofit2.Retrofit.Builder()
                         .baseUrl(Constants.BASE_URL)
                         .addConverterFactory(createGsonConverter())
+                        .addCallAdapterFactory(SmartCallFactory(BasicCaching.fromCtx(context)))
                         .client(okHttpClient)
                         .build()
             }
             return retrofit
         }
     }
-
-
-
 }

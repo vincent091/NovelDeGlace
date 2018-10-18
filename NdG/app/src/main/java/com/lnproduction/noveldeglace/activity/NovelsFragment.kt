@@ -52,6 +52,13 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
         val rootView = inflater.inflate(R.layout.content_main, container, false)
         activity?.setTitle("Romans")
 
+        presenter.createView(this)
+        presenter.getNovelList(-1)
+        return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         layoutManager = LinearLayoutManager(activity)
 
         currentLayoutManagerType = NovelsFragment.LayoutManagerType.GRID_LAYOUT_MANAGER
@@ -87,9 +94,6 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
 
         fab.hide()
 
-        presenter.createView(this)
-        presenter.getNovelList(-1)
-        return rootView
     }
 
     override fun onDestroyView() {

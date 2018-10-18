@@ -11,7 +11,7 @@ import retrofit2.Response
 class PostFragmentPresenter() : BasePresenter<PostFragment>() {
 
      fun getPostsList() {
-        val service = RetrofitInstance.getRetrofitInstance()!!.create(APIInterface::class.java)
+        val service = RetrofitInstance.getRetrofitInstance(view?.context)!!.create(APIInterface::class.java)
         val call = service.getPosts()
 
         call.enqueue(object : Callback<ArrayList<Post>> {
