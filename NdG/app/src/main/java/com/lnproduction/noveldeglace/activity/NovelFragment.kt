@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import butterknife.BindView
+import android.widget.ExpandableListAdapter
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.lnproduction.noveldeglace.R
@@ -16,6 +15,7 @@ import com.lnproduction.noveldeglace.utils.HtmlTextInTextView
 import com.lnproduction.noveldeglace.utils.Log
 import com.lnproduction.noveldeglace.viewModel.NovelPresenter
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.novel_detail.*
 
 class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapter.ContentListener {
 
@@ -28,23 +28,6 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
             return fragment
         }
     }
-
-    @BindView(R.id.detail_header)
-    lateinit var headerLayout : RelativeLayout
-    @BindView(R.id.chapter_layout)
-    lateinit var chapterLayout : RelativeLayout
-    @BindView(R.id.detail_icon)
-    lateinit var imgDetail : ImageView
-    @BindView(R.id.title_novel)
-    lateinit var titleNovel : TextView
-    @BindView(R.id.author_novel)
-    lateinit var authorNovel : TextView
-    @BindView(R.id.rythm_novel)
-    lateinit var rythmNovel : TextView
-    @BindView(R.id.chapter_novel)
-    lateinit var chapterNovel : TextView
-    @BindView(R.id.expandableNovelChapter)
-    lateinit var expandableNovelChapter : ExpandableListView
 
     private lateinit var unbinder: Unbinder
 
@@ -89,21 +72,21 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
 
         val novel = novelPresenter.novel
         activity?.title = novel.novelTitle.titleName
-        titleNovel.setTextColor(novel.textColor)
-        titleNovel.setText(HtmlTextInTextView(novel.novelTitle.titleName))
-        Picasso.with(imgDetail.context).load(novel.imgNovel).fit().centerCrop().into(imgDetail)
-        headerLayout.setBackgroundColor(novel.backgroundColor)
-        chapterLayout.setBackgroundColor(novel.backgroundColor)
+        title_novel.setTextColor(novel.textColor)
+        title_novel.setText(HtmlTextInTextView(novel.novelTitle.titleName))
+        Picasso.with(detail_icon.context).load(novel.imgNovel).fit().centerCrop().into(detail_icon)
+        detail_header.setBackgroundColor(novel.backgroundColor)
+        chapter_layout.setBackgroundColor(novel.backgroundColor)
 
 
-        authorNovel.text = getString(R.string.novel_autor, novelDetail.author)
-        authorNovel.setTextColor(novel.textColor)
+        author_novel.text = getString(R.string.novel_autor, novelDetail.author)
+        author_novel.setTextColor(novel.textColor)
 
-        rythmNovel.text = getString(R.string.novel_date_out, novelDetail.rythm)
-        rythmNovel.setTextColor(novel.textColor)
+        rythm_novel.text = getString(R.string.novel_date_out, novelDetail.rythm)
+        rythm_novel.setTextColor(novel.textColor)
 
-        chapterNovel.text = getString(R.string.novel_nb_chap, novelDetail.nbChapters)
-        chapterNovel.setTextColor(novel.textColor)
+        chapter_novel.text = getString(R.string.novel_nb_chap, novelDetail.nbChapters)
+        chapter_novel.setTextColor(novel.textColor)
 
         adapter = ExpandableLayoutAdapter(novelDetail.tomeList, novel.backgroundColor,novel.textColor,this)
         expandableNovelChapter.setAdapter(adapter)

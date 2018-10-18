@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.RadioButton
-import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.adapter.NovelAdapter
 import com.lnproduction.noveldeglace.model.Novel
@@ -20,8 +17,7 @@ import com.lnproduction.noveldeglace.utils.AutoFitGridLayoutManager
 import com.lnproduction.noveldeglace.utils.MultiLineRadioGroup
 import com.lnproduction.noveldeglace.utils.RecyclerItemDecoration
 import com.lnproduction.noveldeglace.viewModel.NovelsFragmentPresenter
-
-
+import kotlinx.android.synthetic.main.content_main.*
 
 
 class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentListener {
@@ -36,11 +32,7 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
     val presenter = NovelsFragmentPresenter()
 
     private lateinit var currentLayoutManagerType: NovelsFragment.LayoutManagerType
-    private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private lateinit var fab : FloatingActionButton
-    private lateinit var optionLayout : RelativeLayout
-    private lateinit var optionArrow : ImageView
     private lateinit var novelAdapter : NovelAdapter
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
@@ -59,11 +51,6 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.content_main, container, false)
         activity?.setTitle("Romans")
-        recyclerView = rootView.findViewById(R.id.recycler_view_notice_list)
-        fab = rootView.findViewById(R.id.fab)
-        optionLayout = rootView.findViewById(R.id.option_layout)
-        optionArrow = rootView.findViewById(R.id.option_arrow)
-        val mMultiLineRadioGroup = rootView.findViewById(R.id.main_activity_multi_line_radio_group) as MultiLineRadioGroup
 
         layoutManager = LinearLayoutManager(activity)
 
@@ -78,7 +65,7 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
         }
 
 
-        mMultiLineRadioGroup.setOnCheckedChangeListener(object : MultiLineRadioGroup.OnCheckedChangeListener {
+        main_activity_multi_line_radio_group.setOnCheckedChangeListener(object : MultiLineRadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(group: ViewGroup, button: RadioButton) {
                 val rdbGroup = group as MultiLineRadioGroup
                 presenter.filterByRadioButton(rdbGroup.checkedRadioButtonIndex)
@@ -88,13 +75,13 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
         animShow = AnimationUtils.loadAnimation( activity, R.anim.view_show);
         animHide = AnimationUtils.loadAnimation( activity, R.anim.view_hide);
 
-        optionLayout.setOnClickListener{
-            if(mMultiLineRadioGroup.visibility == View.GONE) {
-                mMultiLineRadioGroup.setVisibility(View.VISIBLE);
-                optionArrow.setImageResource(R.drawable.chevron_up)
+        option_layout.setOnClickListener{
+            if(main_activity_multi_line_radio_group.visibility == View.GONE) {
+                main_activity_multi_line_radio_group.setVisibility(View.VISIBLE);
+                option_arrow.setImageResource(R.drawable.chevron_up)
             }else{
-                mMultiLineRadioGroup.setVisibility(View.GONE);
-                optionArrow.setImageResource(R.drawable.chevron_down)
+                main_activity_multi_line_radio_group.setVisibility(View.GONE);
+                option_arrow.setImageResource(R.drawable.chevron_down)
             }
         }
 
@@ -119,8 +106,8 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
         var scrollPosition = 0
 
         // If a layout manager has already been set, get current scroll position.
-        if (recyclerView.layoutManager != null) {
-            scrollPosition = (recyclerView.layoutManager as LinearLayoutManager)
+        if (recycler_view_notice_list.layoutManager != null) {
+            scrollPosition = (recycler_view_notice_list.layoutManager as LinearLayoutManager)
                     .findFirstCompletelyVisibleItemPosition()
         }
 
@@ -135,7 +122,7 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
             }
         }
 
-        with(recyclerView) {
+        with(recycler_view_notice_list) {
             layoutManager = this@NovelsFragment.layoutManager
             scrollToPosition(scrollPosition)
             val itemDecoration = RecyclerItemDecoration(context, R.dimen.item_offset)
@@ -158,9 +145,9 @@ class NovelsFragment : BaseFragment(), INovelsFragment, NovelAdapter.ContentList
     override fun getNovels(novelLists: ArrayList<Novel>?) {
 
         novelAdapter = NovelAdapter(novelLists,this)
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(novelLists!!.size);
-        recyclerView.adapter = novelAdapter
+        recycler_view_notice_list.setHasFixedSize(true);
+        recycler_view_notice_list.setItemViewCacheSize(novelLists!!.size);
+        recycler_view_notice_list.adapter = novelAdapter
     }
 
     override fun onItemClicked(item: Novel) {

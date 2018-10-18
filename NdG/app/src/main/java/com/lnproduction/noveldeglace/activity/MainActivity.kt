@@ -8,9 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
@@ -20,6 +17,7 @@ import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.utils.Constants
 import com.lnproduction.noveldeglace.utils.log
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.navigation_main.*
 
 
@@ -89,22 +87,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun setupNavigationDrawer() {
-        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
-        val hView = navigationView.getHeaderView(0)
+
+        val hView = nav_view.getHeaderView(0)
 
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_demo)
 
         val rounded = RoundedBitmapDrawableFactory.create(resources, bitmap)
         rounded.setCornerRadius(bitmap.width.toFloat())
 
-        val drawerProfile = hView.findViewById(R.id.imageView) as ImageView
-        drawerProfile.setImageDrawable(rounded)
-
-        val drawerName = hView.findViewById(R.id.full_name) as TextView
-        drawerName.setText("Claramiel")
-
-        val userRole = hView.findViewById(R.id.assignment_role) as TextView
-        userRole.setText("Lolli gothique")
+        imageView.setImageDrawable(rounded)
+        full_name.setText("Claramiel")
+        assignment_role.setText("Lolli gothique")
 
         nav_view.setNavigationItemSelectedListener(this)
     }

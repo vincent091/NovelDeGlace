@@ -2,8 +2,6 @@ package com.lnproduction.noveldeglace.activity
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
@@ -15,21 +13,13 @@ import com.lnproduction.noveldeglace.model.LoginValidator
 import com.lnproduction.noveldeglace.utils.ResourceProvider
 import com.lnproduction.noveldeglace.utils.SchedulersFactory
 import com.lnproduction.noveldeglace.viewModel.LoginPresenter
+import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * Based on Google Login Screen example
  */
 class LoginActivity : BaseActivity(), LoginView {
-
-    @BindView(R.id.email)
-    lateinit var loginView: EditText
-    @BindView(R.id.password)
-    lateinit var passwordView: EditText
-    @BindView(R.id.login_progress)
-    lateinit var progressView: View
-    @BindView(R.id.login_form)
-    lateinit var loginFormView: View
-
+    
     //TODO @Inject
     lateinit var loginPresenter: LoginPresenter
 
@@ -41,7 +31,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
         unbinder = ButterKnife.bind(this)
 
-        passwordView.setOnEditorActionListener { _, id, _ ->
+        password.setOnEditorActionListener { _, id, _ ->
             if (id == 1) {
                 onSignInClick()
                 true
@@ -64,8 +54,8 @@ class LoginActivity : BaseActivity(), LoginView {
     fun onSignInClick() {
         loginPresenter.attemptLogin(
                 LoginCredentials(
-                        login = loginView.text.toString(),
-                        password = passwordView.text.toString()
+                        login = email.text.toString(),
+                        password = password.text.toString()
                 )
         )
     }
@@ -83,28 +73,28 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun showLoginError(errorMessage: String?) {
-        loginView.error = errorMessage
+        email.error = errorMessage
     }
 
     override fun showPasswordError(errorMessage: String?) {
-        passwordView.error = errorMessage
+        password.error = errorMessage
     }
 
     override fun requestLoginFocus() {
-        loginView.requestFocus()
+        email.requestFocus()
     }
 
     override fun requestPasswordFocus() {
-        passwordView.requestFocus()
+        password.requestFocus()
     }
 
     internal fun showProgress(progressVisible: Boolean) {
         val animationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        loginFormView.visibility = if (progressVisible) View.GONE else View.VISIBLE
-        loginFormView.animate().setDuration(animationDuration.toLong()).alpha((if (progressVisible) 0 else 1).toFloat())
+        login_form.visibility = if (progressVisible) View.GONE else View.VISIBLE
+        login_form.animate().setDuration(animationDuration.toLong()).alpha((if (progressVisible) 0 else 1).toFloat())
 
-        progressView.visibility = if (progressVisible) View.VISIBLE else View.GONE
-        progressView.animate().setDuration(animationDuration.toLong()).alpha((if (progressVisible) 1 else 0).toFloat())
+        login_progress.visibility = if (progressVisible) View.VISIBLE else View.GONE
+        login_progress.animate().setDuration(animationDuration.toLong()).alpha((if (progressVisible) 1 else 0).toFloat())
     }
 }
