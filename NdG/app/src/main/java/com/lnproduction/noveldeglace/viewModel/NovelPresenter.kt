@@ -6,7 +6,7 @@ import com.lnproduction.noveldeglace.activity.NovelFragment
 import com.lnproduction.noveldeglace.activity.WebViewActivity
 import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.model.NovelDetail
-import com.lnproduction.noveldeglace.retrofit.GetNovelDetails
+import com.lnproduction.noveldeglace.retrofit.APIInterface
 import com.lnproduction.noveldeglace.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +20,7 @@ class NovelPresenter() : BasePresenter<NovelFragment>() {
     {
         val gson = Gson()
         novel = gson.fromJson(json,Novel::class.java)
-        val service : GetNovelDetails = RetrofitInstance.getRetrofitInstance()!!.create(GetNovelDetails::class.java)
+        val service = RetrofitInstance.getRetrofitInstance()!!.create(APIInterface::class.java)
         val call = service.getDetails(novel.novelId)
 
         call.enqueue( object : Callback<NovelDetail> {

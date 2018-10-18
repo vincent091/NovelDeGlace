@@ -3,7 +3,7 @@ package com.lnproduction.noveldeglace.viewModel
 import com.google.gson.Gson
 import com.lnproduction.noveldeglace.activity.NovelsFragment
 import com.lnproduction.noveldeglace.model.Novel
-import com.lnproduction.noveldeglace.retrofit.GetNovelsList
+import com.lnproduction.noveldeglace.retrofit.APIInterface
 import com.lnproduction.noveldeglace.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -12,7 +12,7 @@ import retrofit2.Response
 class NovelsFragmentPresenter() : BasePresenter<NovelsFragment>() {
 
     fun getNovelList( categorieId : Int) {
-        val service : GetNovelsList = RetrofitInstance.getRetrofitInstance()!!.create(GetNovelsList::class.java)
+        val service = RetrofitInstance.getRetrofitInstance()!!.create(APIInterface::class.java)
         val call = service.getNovels()
 
         call.enqueue(object : Callback<ArrayList<Novel>> {
