@@ -34,15 +34,6 @@ class PostFragment : BaseFragment() , IPostFragment {
         activity?.setTitle("Nouveauté")
 
 
-        layoutManager = LinearLayoutManager(activity)
-
-        currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
-
-        if (savedInstanceState != null) {
-            currentLayoutManagerType = savedInstanceState
-                    .getSerializable(KEY_LAYOUT_MANAGER) as LayoutManagerType
-        }
-
         presenterFragment.createView(this)
         presenterFragment.getPostsList()
 
@@ -53,6 +44,15 @@ class PostFragment : BaseFragment() , IPostFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rltvFilter.visibility = View.GONE
+        layoutManager = LinearLayoutManager(activity)
+
+        currentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER
+        setRecyclerViewLayoutManager(currentLayoutManagerType)
+
+        if (savedInstanceState != null) {
+            currentLayoutManagerType = savedInstanceState
+                    .getSerializable(KEY_LAYOUT_MANAGER) as LayoutManagerType
+        }
     }
 
     override fun onDestroy() {
@@ -111,7 +111,6 @@ class PostFragment : BaseFragment() , IPostFragment {
     }
 
     override fun getPosts(postsList: ArrayList<Post>?) {
-        setRecyclerViewLayoutManager(currentLayoutManagerType)
         postAdapter = PostAdapter(postsList)
         recycler_view_notice_list.adapter = postAdapter
     }

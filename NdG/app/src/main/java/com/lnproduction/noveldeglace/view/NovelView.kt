@@ -30,10 +30,8 @@ class NovelView : CardView{
     }
 
     fun setNovelList(novel: Novel){
-        val picasso = Picasso.Builder(context)
-                .listener { _, _, e -> e.printStackTrace() }
-                .build()
-        picasso.load(novel.imgNovel)
+
+        Picasso.with(context).load(novel.imgNovel)
                 .fit().centerCrop()
                 .transform(PaletteTransformation.instance())
                 .into(picture_novel, object : Callback.EmptyCallback() {

@@ -83,6 +83,7 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
 
         adapter = ExpandableLayoutAdapter(novelDetail.tomeList, novel.backgroundColor,novel.textColor,this)
         expandableNovelChapter.setAdapter(adapter)
+        expandableNovelChapter.expandGroup(0)
     }
 
     override fun onChapters(url: String) {
