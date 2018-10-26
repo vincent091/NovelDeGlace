@@ -1,6 +1,8 @@
 package com.lnproduction.noveldeglace.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +43,13 @@ class ExpandableLayoutAdapter(private val dataSet: ArrayList<Tome>, private val 
         val expandedListTextView = view?.findViewById(R.id.item_header_name) as TextView
         val groupLayout : LinearLayout = view.findViewById(R.id.group_layout)
         val arrowIMg : ImageView = view.findViewById(R.id.item_arrow)
-        groupLayout.setBackgroundColor(backgroundColor)
-        expandedListTextView.setTextColor(textColor)
+        groupLayout.setBackgroundResource(R.drawable.round_corner_layout)
+        val drawable = groupLayout.background as GradientDrawable
+        drawable.setColor(Color.argb(192, Color.red(textColor), Color.green(textColor), Color.blue(textColor)))
+        //groupLayout.setBackgroundColor(Color.argb(192, Color.red(textColor), Color.green(textColor), Color.blue(textColor)))
+        expandedListTextView.setTextColor(backgroundColor)
         expandedListTextView.text = "Tome "+ tome.tomeId
+        arrowIMg.setColorFilter(backgroundColor);
         if(isExpanded)
         {
             arrowIMg.rotation = 180F

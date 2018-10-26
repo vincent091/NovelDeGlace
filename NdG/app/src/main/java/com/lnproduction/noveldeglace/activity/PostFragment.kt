@@ -15,7 +15,7 @@ import com.lnproduction.noveldeglace.viewModel.PostFragmentPresenter
 import kotlinx.android.synthetic.main.content_main.*
 
 
-class PostFragment : BaseFragment() , IPostFragment {
+class PostFragment : BaseFragment() , IPostFragment, PostAdapter.PostListener {
 
     private lateinit var currentLayoutManagerType: LayoutManagerType
     private lateinit var layoutManager: RecyclerView.LayoutManager
@@ -101,6 +101,9 @@ class PostFragment : BaseFragment() , IPostFragment {
         super.onSaveInstanceState(savedInstanceState)
     }
 
+    override fun onPostClicked(item: Post) {
+        presenterFragment.openChapterInWebView(item.postLink)
+    }
 
     companion object {
         private val TAG = "PostFragment"
@@ -111,7 +114,7 @@ class PostFragment : BaseFragment() , IPostFragment {
     }
 
     override fun getPosts(postsList: ArrayList<Post>?) {
-        postAdapter = PostAdapter(postsList)
+        postAdapter = PostAdapter(postsList,this)
         recycler_view_notice_list.adapter = postAdapter
     }
 

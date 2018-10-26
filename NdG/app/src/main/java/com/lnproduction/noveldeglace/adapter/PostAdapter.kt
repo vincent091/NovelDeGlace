@@ -2,14 +2,13 @@ package com.lnproduction.noveldeglace.adapter
 
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.lnproduction.noveldeglace.model.Post
 import com.lnproduction.noveldeglace.view.PostView
 import java.util.*
 
 
-class PostAdapter(private val dataSet: ArrayList<Post>?) :
+class PostAdapter(private val dataSet: ArrayList<Post>?,  private val listener: PostListener) :
         RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     private var contactListFiltered: List<Post> = dataSet!!
@@ -34,7 +33,7 @@ class PostAdapter(private val dataSet: ArrayList<Post>?) :
         // with that element
         viewHolder.postView.setPostList(post)
         viewHolder.postView.setOnClickListener {
-            Toast.makeText(viewHolder.postView.context, "Click in position :$position",Toast.LENGTH_SHORT).show()
+            listener.onPostClicked(post)
         }
     }
 
@@ -72,5 +71,9 @@ class PostAdapter(private val dataSet: ArrayList<Post>?) :
                 notifyDataSetChanged()
             }
         }
+    }
+
+    interface PostListener {
+        fun onPostClicked(item: Post)
     }
 }

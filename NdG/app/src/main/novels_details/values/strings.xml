@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="novel_autor">Auteur : %1$s</string>
+    <string name="novel_synopsys">Résumé :\n %1$s</string>
     <string name="novel_date_out">Sorties : %1$s</string>
     <string name="novel_nb_chap">Nb de Chap : %1$d</string>
 </resources>

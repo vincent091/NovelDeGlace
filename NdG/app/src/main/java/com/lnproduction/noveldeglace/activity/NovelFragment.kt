@@ -1,5 +1,6 @@
 package com.lnproduction.noveldeglace.activity
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -65,6 +66,7 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
 
         val novel = novelPresenter.novel
         activity?.title = novel.novelTitle.titleName
+        favorite_icon.setColorFilter(novel.textColor)
         title_novel.setTextColor(novel.textColor)
         title_novel.setText(HtmlTextInTextView(novel.novelTitle.titleName))
         Picasso.with(detail_icon.context).load(novel.imgNovel).fit().centerCrop().into(detail_icon)
@@ -81,9 +83,14 @@ class NovelFragment : BaseFragment() , NovelDetailsView , ExpandableLayoutAdapte
         chapter_novel.text = getString(R.string.novel_nb_chap, novelDetail.nbChapters)
         chapter_novel.setTextColor(novel.textColor)
 
+        synpsys_novel.text = getString(R.string.novel_synopsys,novelDetail.synopsis)
+        synpsys_novel.setTextColor(novel.textColor)
+
         adapter = ExpandableLayoutAdapter(novelDetail.tomeList, novel.backgroundColor,novel.textColor,this)
         expandableNovelChapter.setAdapter(adapter)
         expandableNovelChapter.expandGroup(0)
+        expandableNovelChapter.divider = ColorDrawable(novel.backgroundColor)
+        expandableNovelChapter.dividerHeight = 20
     }
 
     override fun onChapters(url: String) {

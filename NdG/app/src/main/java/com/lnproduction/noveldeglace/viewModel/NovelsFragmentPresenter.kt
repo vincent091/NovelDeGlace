@@ -17,21 +17,25 @@ class NovelsFragmentPresenter() : BasePresenter<NovelsFragment>() {
 
         call.enqueue(object : Callback<ArrayList<Novel>> {
             override fun onResponse(call: Call<ArrayList<Novel>>, response: Response<ArrayList<Novel>>) {
-                val filteredNovelsList : ArrayList<Novel> = ArrayList()
-                for (novel : Novel in response.body()!!) {
-                    when (categorieId) {
-                        -1 -> if (novel.feature_media > 0) {
-                            filteredNovelsList.add(novel)
-                        }
-                        -2 -> if (novel.feature_media == 0) {
-                            filteredNovelsList.add(novel)
-                        }
-                        else -> if (novel.feature_media > 0 && novel.idCategories.get(0) == categorieId) {
-                            filteredNovelsList.add(novel)
+                if(response.isSuccessful){
+                    val filteredNovelsList : ArrayList<Novel> = ArrayList()
+                    for (novel : Novel in response.body()!!) {
+                        when (categorieId) {
+                            -1 -> if (novel.feature_media > 0) {
+                                filteredNovelsList.add(novel)
+                            }
+                            -2 -> if (novel.feature_media == 0) {
+                                filteredNovelsList.add(novel)
+                            }
+                            else -> if (novel.feature_media > 0 && novel.idCategories.get(0) == categorieId) {
+                                filteredNovelsList.add(novel)
+                            }
                         }
                     }
+                    view?.getNovels(filteredNovelsList)
                 }
-                view?.getNovels(filteredNovelsList)
+                else
+                    view?.getErrorMessage(response.errorBody().toString())
             }
 
             override fun onFailure(call: Call<ArrayList<Novel>>, t: Throwable) {

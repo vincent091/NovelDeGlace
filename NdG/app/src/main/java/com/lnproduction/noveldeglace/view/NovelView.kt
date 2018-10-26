@@ -38,8 +38,16 @@ class NovelView : CardView{
                     override fun onSuccess() {
                         val bitmap = (picture_novel.drawable as BitmapDrawable).bitmap // Ew!
                         val palette = PaletteTransformation.getPalette(bitmap)
-                        novel.textColor = palette.darkMutedSwatch!!.rgb
-                        novel.backgroundColor = palette.lightMutedSwatch!!.rgb
+                        if(palette.darkMutedSwatch!=null) {
+                            novel.textColor = palette.darkMutedSwatch!!.rgb
+                        }else{
+                            novel.textColor = palette.getDominantColor(0)
+                        }
+                        if(palette.lightMutedSwatch!=null){
+                            novel.backgroundColor = palette.lightMutedSwatch!!.rgb
+                        }else{
+                            novel.backgroundColor = palette.getLightMutedColor(0)
+                        }
                     }
                 })
     }

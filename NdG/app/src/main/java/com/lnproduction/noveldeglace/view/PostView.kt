@@ -3,6 +3,7 @@ package com.lnproduction.noveldeglace.view
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import com.lnproduction.noveldeglace.R
@@ -43,9 +44,19 @@ class PostView : CardView {
                      override fun onSuccess() {
                          val bitmap = (picture_novel.drawable as BitmapDrawable).bitmap // Ew!
                          val palette = PaletteTransformation.getPalette(bitmap)
-                         card_view_top.setBackgroundColor(palette.lightMutedSwatch!!.rgb)
-                         date_novel.setTextColor(palette.darkMutedSwatch!!.rgb)
-                         title_novel.setTextColor(palette.darkMutedSwatch!!.rgb)
+                         Log.e("Palette",palette.darkMutedSwatch?.rgb.toString())
+                         if(palette.darkMutedSwatch!=null) {
+                             date_novel.setTextColor(palette.darkMutedSwatch!!.rgb)
+                             title_novel.setTextColor(palette.darkMutedSwatch!!.rgb)
+                         }else{
+                             date_novel.setTextColor(palette.getDominantColor(0))
+                             title_novel.setTextColor(palette.getDominantColor(0))
+                         }
+                         if(palette.lightMutedSwatch!=null){
+                             card_view_top.setBackgroundColor(palette.lightMutedSwatch!!.rgb)
+                         }else{
+                             card_view_top.setBackgroundColor(palette.getLightMutedColor(0))
+                         }
                      }
                  })
     }

@@ -79,7 +79,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             true
         }
 
-        bottom_navigation.getMenu().getItem(0).setChecked(true);
+        bottom_navigation.menu.getItem(0).isChecked = true
         postFragment = PostFragment()
         supportFragmentManager.beginTransaction().run {
             replace(R.id.sample_content_fragment, postFragment)
@@ -94,16 +94,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_demo)
 
         val rounded = RoundedBitmapDrawableFactory.create(resources, bitmap)
-        rounded.setCornerRadius(bitmap.width.toFloat())
+        rounded.cornerRadius = bitmap.width.toFloat()
 
         val drawerProfile = hView.findViewById(R.id.imageView) as ImageView
         drawerProfile.setImageDrawable(rounded)
 
         val drawerName = hView.findViewById(R.id.full_name) as TextView
-        drawerName.setText("Claramiel")
+        drawerName.text = "Claramiel"
 
         val userRole = hView.findViewById(R.id.assignment_role) as TextView
-        userRole.setText("Lolli gothique")
+        userRole.text = "Lolli gothique"
 
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -120,7 +120,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         searchView.apply {
             setSearchableInfo(searchManager
                     .getSearchableInfo(componentName))
-            setMaxWidth(Integer.MAX_VALUE)
+            maxWidth = Integer.MAX_VALUE
 
             // listening to search query text change
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -145,30 +145,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val id = item?.itemId
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            return true;
+            return true
         }
 
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
+        if (!searchView.isIconified) {
+            searchView.isIconified = true
+            return
         }
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

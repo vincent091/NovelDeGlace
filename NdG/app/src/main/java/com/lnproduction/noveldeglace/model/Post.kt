@@ -13,8 +13,8 @@ class Post {
     @SerializedName("title")
     lateinit var postTitle : Title
 
-    @SerializedName(value = "excerpt")
-    lateinit var postText : PostText
+    @SerializedName(value = "link")
+    lateinit var postLink : String
 
     @SerializedName("fimg_url")
     lateinit var postImg : String

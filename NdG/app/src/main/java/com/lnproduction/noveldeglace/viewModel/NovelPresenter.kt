@@ -29,7 +29,10 @@ class NovelPresenter() : BasePresenter<NovelFragment>() {
             }
 
             override fun onResponse(call: Call<NovelDetail>, response: Response<NovelDetail>) {
-                view?.getNovelDetails(response.body()!!)
+                if(response.isSuccessful)
+                    view?.getNovelDetails(response.body()!!)
+                else
+                    view?.getErrorMessage(response.errorBody().toString())
             }
 
         })
