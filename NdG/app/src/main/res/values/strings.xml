@@ -8,6 +8,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="categories_prompt">Catégorie</string>
+    <string name="connection_menu_on">Connection</string>
+    <string name="connection_menu_off">Déconnection</string>
+    <string name="profile_status">Lecteur</string>
+    <string name="wrong_identifiant">identifiants incorrects</string>
 
 
 </resources>

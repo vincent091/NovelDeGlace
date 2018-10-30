@@ -5,12 +5,16 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
+import com.jakewharton.picasso.OkHttp3Downloader
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.utils.PaletteTransformation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.grid_post.view.*
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
+
 
 class NovelView : CardView{
 
@@ -31,7 +35,18 @@ class NovelView : CardView{
 
     fun setNovelList(novel: Novel){
 
-        Picasso.with(context).load(novel.imgNovel)
+        val okHttpClient = OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .build()
+
+
+        val picasso = Picasso.Builder(context)
+                .downloader(OkHttp3Downloader(okHttpClient))
+                .listener { _, _, e -> e.printStackTrace() }
+                .build()
+
+        picasso.load(novel.imgNovel)
                 .fit().centerCrop()
                 .transform(PaletteTransformation.instance())
                 .into(picture_novel, object : Callback.EmptyCallback() {
@@ -49,6 +64,7 @@ class NovelView : CardView{
                             novel.backgroundColor = palette.getLightMutedColor(0)
                         }
                     }
+
                 })
     }
 }

@@ -6,4 +6,6 @@ public class Constants {
     public static final int LOG_LEVEL = 3;
 
     public static String BASE_URL = "https://noveldeglace.com/wp-json/";
+
+    public static String SHARED_PREFS_USER = "userValue";
 }

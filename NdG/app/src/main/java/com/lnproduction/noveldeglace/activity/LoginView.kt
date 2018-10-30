@@ -6,8 +6,6 @@ interface LoginView {
 
     fun hideProgress()
 
-    fun onLoginSuccessful()
-
     fun showLoginError(errorMessage: String?)
 
     fun showPasswordError(errorMessage: String?)

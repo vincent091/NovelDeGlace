@@ -2,13 +2,11 @@ package com.lnproduction.noveldeglace.activity
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.model.LoginCredentials
-import com.lnproduction.noveldeglace.model.LoginRepository
-import com.lnproduction.noveldeglace.model.LoginUseCase
 import com.lnproduction.noveldeglace.model.LoginValidator
 import com.lnproduction.noveldeglace.utils.ResourceProvider
-import com.lnproduction.noveldeglace.utils.SchedulersFactory
 import com.lnproduction.noveldeglace.viewModel.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -18,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseActivity(), LoginView {
 
     //TODO @Inject
-    lateinit var loginPresenter: LoginPresenter
+    private lateinit var loginPresenter: LoginPresenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,15 +25,16 @@ class LoginActivity : BaseActivity(), LoginView {
 
 
         password.setOnEditorActionListener { _, id, _ ->
-            if (id == 1) {
-                onSignInClick()
-                true
-            } else {
-                false
+            when (id) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    onSignInClick()
+                    true
+                }
+                else -> false
             }
         }
 
-        loginPresenter = LoginPresenter(ResourceProvider(resources), LoginValidator(), LoginUseCase(LoginRepository()), SchedulersFactory())
+        loginPresenter = LoginPresenter(ResourceProvider(resources), LoginValidator())
         loginPresenter.createView(this)
 
         email_sign_in_button.setOnClickListener {
@@ -48,7 +47,7 @@ class LoginActivity : BaseActivity(), LoginView {
         super.onDestroy()
     }
 
-    fun onSignInClick() {
+    private fun onSignInClick() {
         loginPresenter.attemptLogin(
                 LoginCredentials(
                         login = email.text.toString(),
@@ -63,10 +62,6 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun hideProgress() {
         showProgress(false)
-    }
-
-    override fun onLoginSuccessful() {
-        finish()
     }
 
     override fun showLoginError(errorMessage: String?) {

@@ -1,9 +1,11 @@
 package com.lnproduction.noveldeglace.activity
 
+import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,10 +18,14 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.lnproduction.noveldeglace.R
+import com.lnproduction.noveldeglace.model.Users
 import com.lnproduction.noveldeglace.utils.Constants
 import com.lnproduction.noveldeglace.utils.log
+import com.lnproduction.noveldeglace.viewModel.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_main.*
+
+
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +43,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private lateinit var searchView: SearchView
     private lateinit var postFragment: PostFragment
+    private val LOGIN_CODE = 101
+    lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +57,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        setupNavigationDrawer()
         setupBottomBar()
+        presenter = MainActivityPresenter()
+        presenter.createView(this)
+        presenter.setNavigationDrawer()
+    }
+
+    override fun onDestroy() {
+        presenter.destroyView()
+        super.onDestroy()
     }
 
     private fun setupBottomBar() {
@@ -87,23 +102,31 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    private fun setupNavigationDrawer() {
+    fun setupNavigationDrawer(user: Users?) {
 
         val hView = nav_view.getHeaderView(0)
-
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_demo)
-
-        val rounded = RoundedBitmapDrawableFactory.create(resources, bitmap)
-        rounded.cornerRadius = bitmap.width.toFloat()
-
         val drawerProfile = hView.findViewById(R.id.imageView) as ImageView
-        drawerProfile.setImageDrawable(rounded)
-
         val drawerName = hView.findViewById(R.id.full_name) as TextView
-        drawerName.text = "Claramiel"
-
         val userRole = hView.findViewById(R.id.assignment_role) as TextView
-        userRole.text = "Lolli gothique"
+        val menu = nav_view.menu
+
+        if(user == null) {
+            menu.findItem(R.id.nav_connect).title = getString(R.string.connection_menu_on)
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_demo)
+            val rounded = RoundedBitmapDrawableFactory.create(resources, bitmap)
+            rounded.cornerRadius = bitmap.width.toFloat()
+            drawerProfile.setImageDrawable(rounded)
+            drawerName.text = getString(R.string.profile_status)
+            userRole.text = getString(R.string.profile_status)
+        }else{
+            menu.findItem(R.id.nav_connect).title = getString(R.string.connection_menu_off)
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_demo)
+            val rounded = RoundedBitmapDrawableFactory.create(resources, bitmap)
+            rounded.cornerRadius = bitmap.width.toFloat()
+            drawerProfile.setImageDrawable(rounded)
+            drawerName.text = user.userName
+            userRole.text = getString(R.string.profile_status)
+        }
 
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -164,6 +187,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        //to prevent current item select over and over
+        if (item.isChecked) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+            return false
+        }
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_account -> {
@@ -171,13 +199,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             R.id.nav_connect -> {
                 val intent = Intent(this,LoginActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent,LOGIN_CODE)
             }
             R.id.nav_website -> {
-
+                startActivity(Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://noveldeglace.com")))
             }
             R.id.nav_twitter -> {
-
+                startActivity(Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://twitter.com/noveldeglace")))
             }
             R.id.nav_about -> {
 
@@ -189,6 +219,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == LOGIN_CODE && resultCode == Activity.RESULT_OK)
+        {
+            presenter.setNavigationDrawer()
+        }
     }
 
 }
