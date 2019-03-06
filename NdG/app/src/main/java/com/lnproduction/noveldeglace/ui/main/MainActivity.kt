@@ -23,8 +23,8 @@ import com.lnproduction.noveldeglace.base.BaseFragment
 import com.lnproduction.noveldeglace.base.EmptyFragment
 import com.lnproduction.noveldeglace.model.Users
 import com.lnproduction.noveldeglace.ui.Login.LoginActivity
-import com.lnproduction.noveldeglace.ui.NovelList.NovelsFragment
-import com.lnproduction.noveldeglace.ui.Post.PostFragment
+import com.lnproduction.noveldeglace.ui.novelList.NovelsFragment
+import com.lnproduction.noveldeglace.ui.post.PostFragment
 import com.lnproduction.noveldeglace.utils.Constants
 import com.lnproduction.noveldeglace.utils.log
 import kotlinx.android.synthetic.main.activity_main.*

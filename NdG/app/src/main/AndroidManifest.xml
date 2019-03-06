@@ -27,7 +27,7 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ChapterNovel.WebViewActivity"/>
+        <activity android:name=".ui.chapterNovel.WebViewActivity"/>
         <activity android:name=".ui.Login.LoginActivity"
                   android:windowSoftInputMode="adjustNothing"/>
     </application>

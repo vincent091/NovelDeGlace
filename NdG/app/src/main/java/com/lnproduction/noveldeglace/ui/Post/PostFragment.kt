@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.Post
+package com.lnproduction.noveldeglace.ui.post
 
 import android.os.Bundle
 import android.view.LayoutInflater

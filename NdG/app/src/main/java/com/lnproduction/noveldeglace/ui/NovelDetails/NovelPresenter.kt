@@ -1,8 +1,8 @@
-package com.lnproduction.noveldeglace.ui.NovelDetails
+package com.lnproduction.noveldeglace.ui.novelDetails
 
 import android.content.Intent
 import com.google.gson.Gson
-import com.lnproduction.noveldeglace.ui.ChapterNovel.WebViewActivity
+import com.lnproduction.noveldeglace.ui.chapterNovel.WebViewActivity
 import com.lnproduction.noveldeglace.base.BasePresenter
 import com.lnproduction.noveldeglace.model.Novel
 import com.lnproduction.noveldeglace.model.NovelDetail

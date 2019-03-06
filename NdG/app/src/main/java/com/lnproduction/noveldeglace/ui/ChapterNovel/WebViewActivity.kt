@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.ChapterNovel
+package com.lnproduction.noveldeglace.ui.chapterNovel
 
 import android.annotation.SuppressLint
 import android.os.Bundle

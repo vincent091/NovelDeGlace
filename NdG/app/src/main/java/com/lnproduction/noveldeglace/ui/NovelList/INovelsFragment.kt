@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.NovelList
+package com.lnproduction.noveldeglace.ui.novelList
 
 import com.lnproduction.noveldeglace.model.Novel
 

@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.NovelDetails
+package com.lnproduction.noveldeglace.ui.novelDetails
 
 import android.content.Context
 import android.graphics.Color

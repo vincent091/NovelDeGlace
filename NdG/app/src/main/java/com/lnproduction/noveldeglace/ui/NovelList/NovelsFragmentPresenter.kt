@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.NovelList
+package com.lnproduction.noveldeglace.ui.novelList
 
 import com.google.gson.Gson
 import com.lnproduction.noveldeglace.base.BasePresenter

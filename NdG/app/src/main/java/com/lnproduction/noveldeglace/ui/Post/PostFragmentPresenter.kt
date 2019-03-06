@@ -1,7 +1,7 @@
-package com.lnproduction.noveldeglace.ui.Post
+package com.lnproduction.noveldeglace.ui.post
 
 import android.content.Intent
-import com.lnproduction.noveldeglace.ui.ChapterNovel.WebViewActivity
+import com.lnproduction.noveldeglace.ui.chapterNovel.WebViewActivity
 import com.lnproduction.noveldeglace.base.BasePresenter
 import com.lnproduction.noveldeglace.model.Post
 import com.lnproduction.noveldeglace.di.retrofit.APIInterface

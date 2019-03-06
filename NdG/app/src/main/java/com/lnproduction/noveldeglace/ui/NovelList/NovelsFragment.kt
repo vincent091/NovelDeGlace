@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.NovelList
+package com.lnproduction.noveldeglace.ui.novelList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.base.BaseFragment
 import com.lnproduction.noveldeglace.model.Novel
-import com.lnproduction.noveldeglace.ui.NovelDetails.NovelFragment
+import com.lnproduction.noveldeglace.ui.novelDetails.NovelFragment
 import com.lnproduction.noveldeglace.utils.AutoFitGridLayoutManager
 import com.lnproduction.noveldeglace.utils.MultiLineRadioGroup
 import com.lnproduction.noveldeglace.utils.RecyclerItemDecoration

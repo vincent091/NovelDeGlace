@@ -1,4 +1,4 @@
-package com.lnproduction.noveldeglace.ui.NovelList
+package com.lnproduction.noveldeglace.ui.novelList
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
