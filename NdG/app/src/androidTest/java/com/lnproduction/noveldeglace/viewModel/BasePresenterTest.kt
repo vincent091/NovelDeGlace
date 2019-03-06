@@ -1,5 +1,6 @@
 package com.lnproduction.noveldeglace.viewModel
 
+import com.lnproduction.noveldeglace.base.BasePresenter
 import io.reactivex.Observable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
