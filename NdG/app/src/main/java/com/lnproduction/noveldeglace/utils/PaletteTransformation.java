@@ -34,5 +34,4 @@ public final class PaletteTransformation implements Transformation {
     return "";
   }
 
-  // ...
 }

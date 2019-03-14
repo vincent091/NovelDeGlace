@@ -1,7 +1,7 @@
 package com.lnproduction.noveldeglace.utils
 
+import android.annotation.StringRes
 import android.content.res.Resources
-import androidx.annotation.StringRes
 
 class ResourceProvider(private var resources: Resources) {
 

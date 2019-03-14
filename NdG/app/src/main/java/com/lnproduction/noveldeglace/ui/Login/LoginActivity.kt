@@ -10,9 +10,6 @@ import com.lnproduction.noveldeglace.model.LoginValidator
 import com.lnproduction.noveldeglace.utils.ResourceProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
-/**
- * Based on Google Login Screen example
- */
 class LoginActivity : BaseActivity(), LoginView {
 
     //TODO @Inject

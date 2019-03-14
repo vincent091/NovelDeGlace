@@ -2,17 +2,17 @@ package com.lnproduction.noveldeglace.ui.novelDetails
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListAdapter
+import com.hendraanggrian.pikasso.picasso
 import com.lnproduction.noveldeglace.R
 import com.lnproduction.noveldeglace.base.BaseFragment
 import com.lnproduction.noveldeglace.model.NovelDetail
-import com.lnproduction.noveldeglace.utils.HtmlTextInTextView
-import com.lnproduction.noveldeglace.utils.Log
-import com.squareup.picasso.Picasso
+import com.lnproduction.noveldeglace.utils.htmlTextInTextView
 import kotlinx.android.synthetic.main.novel_detail.*
 
 class NovelFragment : BaseFragment() , NovelDetailsView, ExpandableLayoutAdapter.ContentListener {
@@ -67,8 +67,8 @@ class NovelFragment : BaseFragment() , NovelDetailsView, ExpandableLayoutAdapter
         activity?.title = novel.novelTitle.titleName
         favorite_icon.setColorFilter(novel.textColor)
         title_novel.setTextColor(novel.textColor)
-        title_novel.setText(HtmlTextInTextView(novel.novelTitle.titleName))
-        Picasso.with(detail_icon.context).load(novel.imgNovel).fit().centerCrop().into(detail_icon)
+        title_novel.setText(htmlTextInTextView(novel.novelTitle.titleName))
+        picasso.load(novel.imgNovel).fit().into(detail_icon)
         detail_header.setBackgroundColor(novel.backgroundColor)
         chapter_layout.setBackgroundColor(novel.backgroundColor)
 
